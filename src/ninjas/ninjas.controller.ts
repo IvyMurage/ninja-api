@@ -4,20 +4,22 @@ import {
   Delete,
   Get,
   HttpStatus,
-  NotFoundException,
   Param,
   Patch,
   Post,
   Put,
   Query,
   Res,
+  UseGuards,
   ValidationPipe,
 } from "@nestjs/common";
 import { CreateNinjaDto } from "./dto/create-ninja.dto";
 import { UpdateProductDto } from "./dto/update-ninja.dto";
 import { NinjasService } from "./ninjas.service";
 import { Response } from "express";
+import { AuthGuardGuard } from "src/auth-guard/auth-guard.guard";
 @Controller("ninjas")
+@UseGuards(AuthGuardGuard)
 export class NinjasController {
   constructor(private readonly ninjasService: NinjasService) {}
   @Get()
