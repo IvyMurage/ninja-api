@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpStatus,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -25,8 +26,11 @@ export class NinjasController {
 
   @Get(":id")
   getOneNinja(@Param("id") id: string) {
-    return this.ninjasService.getNinja(id);
+    const ninja = this.ninjasService.getNinja(id);
+    return ninja;
   }
+
+  
 
   @Post()
   createNinja(@Body() createNinjaDto: CreateNinjaDto) {

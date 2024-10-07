@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateNinjaDto } from "./dto/create-ninja.dto";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { UpdateProductDto } from "./dto/update-ninja.dto";
+import NotFoundError from "src/exceptions/not-found.exception";
 
 @Injectable()
 export class NinjasService {
@@ -13,7 +14,7 @@ export class NinjasService {
   }
 
   private filePath() {
-    return path.join(__dirname, "data/ninja.mock.json");
+    return path.join(__dirname, "../../src/ninjas/data/ninja.mock.json");
   }
 
   private async loadData() {
@@ -48,9 +49,9 @@ export class NinjasService {
   }
 
   async getNinja(id: string): Promise<any> {
-    try {
-      return this.ninjas.find((ninja) => ninja.id === Number(id));
-    } catch (error) {}
+    const ninja = this.ninjas.find((ninja) => ninja.id === Number(id));
+    if (!ninja) throw new NotFoundError("Ninja", id);
+    return this.ninjas.find((ninja) => ninja.id === Number(id));
   }
 
   async createNinja(ninja: CreateNinjaDto): Promise<any> {
@@ -70,6 +71,7 @@ export class NinjasService {
   async updateNinja(id: string, ninja: UpdateProductDto): Promise<any> {
     try {
       const index = this.ninjas.findIndex((ninja) => ninja.id === Number(id));
+      if (index === -1) throw new NotFoundError("ninja", id);
       const updatedNinja = {
         ...this.ninjas[index],
         ...ninja,
@@ -87,6 +89,7 @@ export class NinjasService {
       const filteredNinjaIndex = this.ninjas.findIndex(
         (ninja) => ninja.id === Number(id),
       );
+      if (filteredNinjaIndex === -1) throw new NotFoundError("ninja", id);
       this.ninjas.splice(filteredNinjaIndex, 1);
       await this.saveData();
     } catch (error) {
