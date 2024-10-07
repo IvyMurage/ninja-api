@@ -3,16 +3,18 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Patch,
   Post,
   Put,
   Query,
+  Res,
 } from "@nestjs/common";
 import { CreateNinjaDto } from "./dto/create-ninja.dto";
 import { UpdateProductDto } from "./dto/update-ninja.dto";
 import { NinjasService } from "./ninjas.service";
-
+import { Response } from "express";
 @Controller("ninjas")
 export class NinjasController {
   constructor(private readonly ninjasService: NinjasService) {}
@@ -32,11 +34,8 @@ export class NinjasController {
   }
 
   @Put(":id")
-  updateNinja(
-    @Param("id") id: string,
-    @Body() udateNinjaDto: UpdateProductDto,
-  ) {
-    return { id, udateNinjaDto };
+  updateNinja(@Param("id") id: string, @Body() updatedNinja: UpdateProductDto) {
+    return this.ninjasService.updateNinja(id, updatedNinja);
   }
 
   @Patch(":id")
@@ -44,12 +43,15 @@ export class NinjasController {
     @Param("id") id: string,
     @Body() updatNinjaPatchDto: UpdateProductDto,
   ) {
-    return { id, updatNinjaPatchDto };
+    return { id };
   }
 
   @Delete(":id")
-  deleteNinja(@Param("id") id: string) {
-    return { id };
+  deleteNinja(@Param("id") id: string, @Res() res: Response) {
+    const message = res
+      .status(HttpStatus.OK)
+      .send({ message: this.ninjasService.removeNinja(id) });
+    res.status(HttpStatus.OK).send({ message });
   }
 }
 //controllers in nest are used to define routes
