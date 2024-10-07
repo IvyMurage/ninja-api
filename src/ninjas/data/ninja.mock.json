@@ -1,0 +1,19 @@
+{ 
+    "ninjas": [
+    {
+        "id": 1,
+        "name": "Ryu",
+        "weapon": "Shuriken"
+    },
+    {
+        "id": 2,
+        "name": "Ken",
+        "weapon": "Fist"
+    },
+    {
+        "id": 3,
+        "name": "Chun-Li",
+        "weapon": "Leg"
+    }
+]
+}
