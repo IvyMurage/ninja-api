@@ -1,19 +1,8 @@
-{ 
-    "ninjas": [
-    {
-        "id": 1,
-        "name": "Ryu",
-        "weapon": "Shuriken"
-    },
-    {
-        "id": 2,
-        "name": "Ken",
-        "weapon": "Fist"
-    },
-    {
-        "id": 3,
-        "name": "Chun-Li",
-        "weapon": "Leg"
-    }
-]
+{
+  "ninjas": [
+    { "id": 1, "name": "Ryu", "weapon": "Shuriken" },
+    { "id": 2, "name": "Ken", "weapon": "Fist" },
+    { "id": 3, "name": "Chun-Li", "weapon": "Leg" },
+    { "id": 4, "name": "Shakura", "weapon": "Arms" }
+  ]
 }

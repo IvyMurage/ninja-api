@@ -15,22 +15,20 @@ import { NinjasService } from "./ninjas.service";
 
 @Controller("ninjas")
 export class NinjasController {
-
-    constructor(private readonly ninjasService: NinjasService){}
+  constructor(private readonly ninjasService: NinjasService) {}
   @Get()
   getNinjas(@Query() query: { weapon: string }) {
-    console.log(query);
-    return  this.ninjasService.getAllNinjas(query.weapon);
+    return this.ninjasService.getAllNinjas(query.weapon);
   }
 
   @Get(":id")
   getOneNinja(@Param("id") id: string) {
-    return { id };
+    return this.ninjasService.getNinja(id);
   }
 
   @Post()
   createNinja(@Body() createNinjaDto: CreateNinjaDto) {
-    return { createNinjaDto };
+    return this.ninjasService.createNinja(createNinjaDto);
   }
 
   @Put(":id")

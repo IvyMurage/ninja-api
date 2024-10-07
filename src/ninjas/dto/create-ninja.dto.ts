@@ -1,5 +1,4 @@
 export class CreateNinjaDto {
   name: string;
-  power: string;
-  age: number;
+  weapon: string;
 }
